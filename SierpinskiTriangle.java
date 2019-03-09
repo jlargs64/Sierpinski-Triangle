@@ -72,8 +72,42 @@ public class SierpinskiTriangle extends JPanel {
             }
         } else {
             // Recursive
+            drawTriangle(g, p, points);
         }
 
+    }
+
+    private void drawTriangle(Graphics g, Point p, int n) {
+        if (n == 0) {
+            return;
+        } else {
+            Point c1 = new Point(width / 2, 0);
+            Point c2 = new Point(0, height);
+            Point c3 = new Point(width, height);
+            int newPoint = r.nextInt(3) + 1;
+
+            if (newPoint == 1) {
+
+                int midx = (p.x + c1.x) / 2;
+                int midy = (p.y + c1.y) / 2;
+                p = new Point(midx, midy);
+                g.fillArc(p.x, p.y, 1, 1, 0, 360);
+                drawTriangle(g, p, n - 1);
+            } else if (newPoint == 2) {
+
+                int midx = (p.x + c2.x) / 2;
+                int midy = (p.y + c2.y) / 2;
+                p = new Point(midx, midy);
+                g.fillArc(p.x, p.y, 1, 1, 0, 360);
+                drawTriangle(g, p, n - 1);
+            } else {
+                int midx = (p.x + c3.x) / 2;
+                int midy = (p.y + c3.y) / 2;
+                p = new Point(midx, midy);
+                g.fillArc(p.x, p.y, 1, 1, 0, 360);
+                drawTriangle(g, p, n - 1);
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -85,7 +119,7 @@ public class SierpinskiTriangle extends JPanel {
         String strPoints = JOptionPane.showInputDialog(null, "Amount of points: ", "Generate A Sierpinski Triangle",
                 JOptionPane.QUESTION_MESSAGE);
         points = Integer.parseInt(strPoints);
-        
+
         if (generationType.equalsIgnoreCase("iterative") || generationType.equalsIgnoreCase("recursive")) {
 
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
